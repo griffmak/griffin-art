@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Griffin's Art Portfolio - Original paintings showcased in comic book style">
+  <meta property="og:title" content="Griffin's Art">
+  <meta property="og:description" content="Original paintings by Griffin">
+  <meta property="og:type" content="website">
+  <title>Griffin's Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- NAVIGATION -->
+  <nav class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="site-title">Griffin's Art</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul id="nav-menu" class="nav-links">
+        <li><a href="index.html" class="nav-link">Gallery</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-banner action-lines">
+    <div class="hero-content">
+      <h1 class="comic-heading">The Gallery</h1>
+      <div class="caption-box">
+        <p>Original works by Griffin</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- GALLERY -->
+  <main id="main-content">
+    <section class="gallery-section" aria-label="Painting gallery">
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- Populated by gallery.js -->
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div id="painting-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-content comic-panel">
+      <button class="modal-close" aria-label="Close painting detail">&times;</button>
+      <div class="modal-image-wrap">
+        <img id="modal-image" src="" alt="">
+      </div>
+      <div class="modal-details">
+        <h2 id="modal-title" class="comic-heading"></h2>
+        <p id="modal-date" class="caption-box"></p>
+        <div id="modal-blurb" class="speech-bubble"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="caption-box">
+      <p>&copy; 2026 Griffin's Art. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/paintings.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/nav.js"></script>
+</body>
+</html>
