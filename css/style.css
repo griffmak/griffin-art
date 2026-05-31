@@ -325,10 +325,45 @@ p:last-child {
   padding: 2rem 1.5rem;
 }
 
+.section-intro {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  color: var(--comic-black);
+  text-shadow:
+    3px 3px 0 var(--comic-yellow),
+    -1px -1px 0 var(--comic-yellow),
+    1px -1px 0 var(--comic-yellow),
+    -1px 1px 0 var(--comic-yellow);
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+}
+
+/* In-progress badge */
+.in-progress-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--comic-red);
+  color: var(--comic-white);
+  font-family: 'Bangers', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border: 2px solid var(--comic-black);
+  box-shadow: 2px 2px 0 var(--comic-black);
+  z-index: 2;
 }
 
 .gallery-item {
