@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  var galleryGrid = document.getElementById('gallery-grid');
   var modal = document.getElementById('painting-modal');
   var modalImage = document.getElementById('modal-image');
   var modalTitle = document.getElementById('modal-title');
@@ -10,32 +9,47 @@
   var modalClose = modal.querySelector('.modal-close');
   var lastFocusedElement = null;
 
-  // ── Render Gallery ──────────────────────────────────────────
+  // ── Helpers ─────────────────────────────────────────────────
 
   function getImageSrc(painting) {
-    // Support both local filenames and full URLs
-    if (painting.image.indexOf('http') === 0) {
-      return painting.image;
-    }
-    return 'images/paintings/' + painting.image;
+    if (painting.image.indexOf('http') === 0) return painting.image;
+    return painting.image;
   }
 
-  function renderGallery() {
+  function lookupArtwork(arrayName, index) {
+    if (arrayName === 'covers') return COMIC_COVERS[index];
+    return PAINTINGS[index];
+  }
+
+  // ── Render ──────────────────────────────────────────────────
+
+  function renderSection(gridId, data, arrayName) {
+    var grid = document.getElementById(gridId);
+    if (!grid) return;
+
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < PAINTINGS.length; i++) {
-      var painting = PAINTINGS[i];
+    for (var i = 0; i < data.length; i++) {
+      var piece = data[i];
 
       var item = document.createElement('article');
       item.className = 'gallery-item comic-panel';
       item.setAttribute('tabindex', '0');
       item.setAttribute('role', 'button');
-      item.setAttribute('aria-label', 'View details: ' + painting.title);
+      item.setAttribute('aria-label', 'View details: ' + piece.title);
+      item.setAttribute('data-array', arrayName);
       item.setAttribute('data-index', i);
 
+      if (piece.inProgress) {
+        var badge = document.createElement('div');
+        badge.className = 'in-progress-badge';
+        badge.textContent = 'In Progress';
+        item.appendChild(badge);
+      }
+
       var img = document.createElement('img');
-      img.src = getImageSrc(painting);
-      img.alt = painting.alt;
+      img.src = getImageSrc(piece);
+      img.alt = piece.alt;
       img.loading = 'lazy';
       img.decoding = 'async';
       img.width = 400;
@@ -43,29 +57,29 @@
 
       var titleOverlay = document.createElement('div');
       titleOverlay.className = 'gallery-item-title';
-      titleOverlay.textContent = painting.title;
+      titleOverlay.textContent = piece.title;
 
       item.appendChild(img);
       item.appendChild(titleOverlay);
       fragment.appendChild(item);
     }
 
-    galleryGrid.appendChild(fragment);
+    grid.appendChild(fragment);
   }
 
-  // ── Modal Logic ─────────────────────────────────────────────
+  // ── Modal ────────────────────────────────────────────────────
 
-  function openModal(index) {
-    var painting = PAINTINGS[index];
-    if (!painting) return;
+  function openModal(arrayName, index) {
+    var piece = lookupArtwork(arrayName, index);
+    if (!piece) return;
 
     lastFocusedElement = document.activeElement;
 
-    modalImage.src = getImageSrc(painting);
-    modalImage.alt = painting.alt;
-    modalTitle.textContent = painting.title;
-    modalDate.textContent = painting.date;
-    modalBlurb.textContent = painting.blurb;
+    modalImage.src = getImageSrc(piece);
+    modalImage.alt = piece.alt;
+    modalTitle.textContent = piece.title;
+    modalDate.textContent = piece.date;
+    modalBlurb.textContent = piece.blurb;
 
     modal.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
@@ -75,13 +89,10 @@
   function closeModal() {
     modal.setAttribute('hidden', '');
     document.body.style.overflow = '';
-
-    if (lastFocusedElement) {
-      lastFocusedElement.focus();
-    }
+    if (lastFocusedElement) lastFocusedElement.focus();
   }
 
-  // ── Focus Trap ──────────────────────────────────────────────
+  // ── Focus Trap ───────────────────────────────────────────────
 
   function trapFocus(event) {
     if (modal.hasAttribute('hidden')) return;
@@ -90,64 +101,44 @@
     var focusable = modal.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
-    var firstFocusable = focusable[0];
-    var lastFocusable = focusable[focusable.length - 1];
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
 
     if (event.shiftKey) {
-      if (document.activeElement === firstFocusable) {
-        event.preventDefault();
-        lastFocusable.focus();
-      }
+      if (document.activeElement === first) { event.preventDefault(); last.focus(); }
     } else {
-      if (document.activeElement === lastFocusable) {
-        event.preventDefault();
-        firstFocusable.focus();
-      }
+      if (document.activeElement === last) { event.preventDefault(); first.focus(); }
     }
   }
 
-  // ── Event Listeners ─────────────────────────────────────────
+  // ── Event Delegation ─────────────────────────────────────────
 
-  // Gallery item click (event delegation)
-  galleryGrid.addEventListener('click', function (e) {
+  function handleGalleryClick(e) {
     var item = e.target.closest('.gallery-item');
-    if (item) {
-      openModal(parseInt(item.getAttribute('data-index'), 10));
-    }
-  });
+    if (!item) return;
+    openModal(item.getAttribute('data-array'), parseInt(item.getAttribute('data-index'), 10));
+  }
 
-  // Keyboard activation on gallery items
-  galleryGrid.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      var item = e.target.closest('.gallery-item');
-      if (item) {
-        e.preventDefault();
-        openModal(parseInt(item.getAttribute('data-index'), 10));
-      }
-    }
-  });
+  function handleGalleryKey(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var item = e.target.closest('.gallery-item');
+    if (!item) return;
+    e.preventDefault();
+    openModal(item.getAttribute('data-array'), parseInt(item.getAttribute('data-index'), 10));
+  }
 
-  // Close modal
+  document.addEventListener('click', handleGalleryClick);
+  document.addEventListener('keydown', handleGalleryKey);
   modalClose.addEventListener('click', closeModal);
-
-  // Close on overlay click
-  modal.addEventListener('click', function (e) {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
-
-  // Escape key closes modal
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) {
-      closeModal();
-    }
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
   });
-
-  // Focus trap
   document.addEventListener('keydown', trapFocus);
 
-  // ── Initialize ──────────────────────────────────────────────
-  renderGallery();
+  // ── Initialize ───────────────────────────────────────────────
+
+  renderSection('covers-grid', COMIC_COVERS, 'covers');
+  renderSection('paintings-grid', PAINTINGS, 'paintings');
 
 })();
