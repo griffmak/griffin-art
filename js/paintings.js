@@ -1,82 +1,135 @@
 /**
- * PAINTINGS DATA
+ * ARTWORK DATA
  *
- * To add a new painting:
- * 1. Drop your image file into images/paintings/
- * 2. Add a new object to the BEGINNING of this array (newest first)
- * 3. Commit and push to GitHub
+ * COMIC_COVERS — recreations of specific comic book covers
+ * PAINTINGS    — original paintings and pop-art pieces
  *
- * Fields:
- *   id    - Unique identifier (use slug format, e.g. "sunset-over-harbor")
- *   title - Painting title
- *   date  - When you made it (e.g. "March 2026")
- *   image - Filename in images/paintings/ OR a full URL
- *   alt   - Describe the painting for screen readers
- *   blurb - Short paragraph about inspiration
+ * To add a piece: drop the image in images/paintings/, add an entry here.
  */
+
+var COMIC_COVERS = [
+  {
+    id: "asm-258-in-progress",
+    title: "The Amazing Spider-Man #258",
+    date: "2026",
+    image: "images/paintings/asm-258-in-progress.jpg",
+    alt: "The Amazing Spider-Man #258 painting, currently in progress",
+    blurb: "Recreation of The Amazing Spider-Man #258 (1984). Currently in progress.",
+    inProgress: true
+  },
+  {
+    id: "giant-xmen-1",
+    title: "Giant-Size X-Men #1",
+    date: "2026",
+    image: "images/paintings/giant-xmen-1.jpg",
+    alt: "Giant-Size X-Men #1 painting recreation showing Wolverine, Colossus, Storm and the all-new X-Men",
+    blurb: "Recreation of Giant-Size X-Men #1 (1975) — the landmark issue that introduced the all-new, all-different X-Men lineup including Wolverine, Colossus, Storm, and Nightcrawler."
+  },
+  {
+    id: "silver-surfer-4",
+    title: "Silver Surfer #4",
+    date: "2026",
+    image: "images/paintings/silver-surfer.jpg",
+    alt: "Silver Surfer #4 painting recreation",
+    blurb: "Recreation of Silver Surfer #4 (1969) — the iconic issue featuring the Silver Surfer's battle with Thor, with Kirby's cosmic energy rendered in bold acrylic."
+  },
+  {
+    id: "asm-50",
+    title: "The Amazing Spider-Man #50",
+    date: "2026",
+    image: "images/paintings/spider-man-no-more.jpg",
+    alt: "The Amazing Spider-Man #50 - Spider-Man No More painting",
+    blurb: "Recreation of The Amazing Spider-Man #50 (1967) — the iconic 'Spider-Man No More!' cover by John Romita Sr., where Peter Parker walks away from his alter ego."
+  }
+];
+
 var PAINTINGS = [
   {
-    id: "crimson-tide",
-    title: "Crimson Tide",
-    date: "January 2026",
-    image: "https://placehold.co/800x1067/D72638/FAF9F6?text=Crimson+Tide",
-    alt: "Placeholder for Crimson Tide painting",
-    blurb: "Inspired by a winter sunset over the harbor. I wanted to capture that fleeting moment when the sky looks like it's on fire and everything turns to gold and red."
+    id: "attack-on-titan",
+    title: "Attack on Titan",
+    date: "2025",
+    image: "images/paintings/attack-on-titan.jpg",
+    alt: "Attack on Titan painting featuring the Colossal Titan and Survey Corps",
+    blurb: "Inspired by the epic scale of Attack on Titan — the colossal titan looming over the walls while the Survey Corps fights back."
   },
   {
-    id: "blue-period",
-    title: "Blue Period",
-    date: "November 2025",
-    image: "https://placehold.co/800x1067/1B3A8C/FAF9F6?text=Blue+Period",
-    alt: "Placeholder for Blue Period painting",
-    blurb: "A meditation on solitude. The blue palette reflects the quiet intensity of those long November evenings when the world feels both vast and intimate."
+    id: "wolverine-zap-pow",
+    title: "Wolverine",
+    date: "2025",
+    image: "images/paintings/wolverine-zap-pow.jpg",
+    alt: "Wolverine painting with comic book ZAP and POW effects",
+    blurb: "Wolverine in classic pop-art style — claws out, with hand-lettered ZAP and POW sound effects against a bold orange background."
   },
   {
-    id: "electric-jungle",
-    title: "Electric Jungle",
-    date: "September 2025",
-    image: "https://placehold.co/800x1067/2D8C3C/FAF9F6?text=Electric+Jungle",
-    alt: "Placeholder for Electric Jungle painting",
-    blurb: "Spent a week in the Pacific Northwest and couldn't stop thinking about how the forest felt alive — humming, electric. This is that energy on canvas."
+    id: "homer-ascendant",
+    title: "Homer Ascendant",
+    date: "2025",
+    image: "images/paintings/homer-ascendant.jpg",
+    alt: "Homer Simpson painted in a psychedelic Medusa-style composition",
+    blurb: "Homer Simpson reimagined as a mythological figure — surrounded by swirling serpentine forms in a psychedelic, Medusa-inspired composition."
   },
   {
-    id: "golden-hour",
-    title: "Golden Hour",
-    date: "July 2025",
-    image: "https://placehold.co/800x1067/F5C542/1A1A1A?text=Golden+Hour",
-    alt: "Placeholder for Golden Hour painting",
-    blurb: "That magic 20 minutes before the sun dips below the horizon. Everything glows. I painted this one fast, trying to keep up with the light."
+    id: "daffy-and-tweety",
+    title: "Daffy & Tweety",
+    date: "2025",
+    image: "images/paintings/daffy-and-tweety.jpg",
+    alt: "Daffy Duck and Tweety Bird painting with purple spray-paint background",
+    blurb: "Daffy and Tweety on a deep purple spray-painted background — two Looney Tunes legends sharing a canvas for the first time."
   },
   {
-    id: "concrete-dreams",
-    title: "Concrete Dreams",
-    date: "May 2025",
-    image: "https://placehold.co/800x1067/666666/FAF9F6?text=Concrete+Dreams",
-    alt: "Placeholder for Concrete Dreams painting",
-    blurb: "Urban landscapes have their own kind of beauty — the geometry of buildings, the way light bounces off glass and steel. This one started as a sketch on the subway."
+    id: "love-smurf",
+    title: "Love Smurf",
+    date: "2025",
+    image: "images/paintings/love-smurf.jpg",
+    alt: "Smurf holding a love spray can painting on yellow background",
+    blurb: "A Smurf armed with a can of love on a bright yellow canvas. Simple. Optimistic. Smurfy."
   },
   {
-    id: "fire-dance",
-    title: "Fire Dance",
-    date: "March 2025",
-    image: "https://placehold.co/800x1067/E8752A/FAF9F6?text=Fire+Dance",
-    alt: "Placeholder for Fire Dance painting",
-    blurb: "Movement and heat. I was watching a bonfire and the way the flames seemed to dance with intention. The brushwork here is deliberately wild and uncontrolled."
+    id: "master-oogway",
+    title: "Master Oogway",
+    date: "2025",
+    image: "images/paintings/master-oogway.jpg",
+    alt: "Master Oogway from Kung Fu Panda painting",
+    blurb: "Master Oogway against a splattered red and blue background. Yesterday is history, tomorrow is a mystery."
   },
   {
-    id: "midnight-blues",
-    title: "Midnight Blues",
-    date: "January 2025",
-    image: "https://placehold.co/800x1067/1A1A4E/FAF9F6?text=Midnight+Blues",
-    alt: "Placeholder for Midnight Blues painting",
-    blurb: "Late nights in the studio, just me and the paint. There's a clarity that comes at 2 AM when the rest of the world is asleep. This piece captures that stillness."
+    id: "popeye-and-olive",
+    title: "Popeye & Olive",
+    date: "2025",
+    image: "images/paintings/popeye-and-olive.jpg",
+    alt: "Popeye and Olive Oyl painting with heart spray-paint background",
+    blurb: "Popeye and Olive Oyl sharing a moment — painted on a rose-tinted spray background with a giant heart. I yam what I yam."
   },
   {
-    id: "spring-riot",
-    title: "Spring Riot",
-    date: "April 2024",
-    image: "https://placehold.co/800x1067/D72638/F5C542?text=Spring+Riot",
-    alt: "Placeholder for Spring Riot painting",
-    blurb: "After a long gray winter, the first burst of spring color felt overwhelming — almost violent in its beauty. I wanted the canvas to feel that same jolt of aliveness."
+    id: "psychedelic-buddha",
+    title: "Psychedelic Buddha",
+    date: "2024",
+    image: "images/paintings/psychedelic-buddha.jpg",
+    alt: "Colorful psychedelic Buddha painting in swirling colors",
+    blurb: "Buddha in full psychedelic bloom — swirling waves of color radiating outward in every direction. Inner peace, outer chaos."
+  },
+  {
+    id: "laughing-buddha",
+    title: "Laughing Buddha",
+    date: "2024",
+    image: "images/paintings/laughing-buddha.jpg",
+    alt: "Laughing Buddha painting on yellow background with colorful mandalas",
+    blurb: "The Laughing Buddha on a sunburst yellow background surrounded by mandalas. Joy as a practice."
+  },
+  {
+    id: "stewie",
+    title: "Stewie",
+    date: "2025",
+    image: "images/paintings/stewie.jpg",
+    alt: "Stewie Griffin from Family Guy painting with alphabet blocks",
+    blurb: "Stewie Griffin with his teddy bear and alphabet blocks spelling out something he definitely shouldn't have access to."
+  },
+  {
+    id: "the-save",
+    title: "The Save",
+    date: "2025",
+    image: "images/paintings/the-save.jpg",
+    alt: "New York Rangers hockey goalie painting",
+    blurb: "A Rangers goalie making the save — painted from a game photo. Equal parts sports, equal parts obsession."
   }
 ];
